@@ -2,6 +2,9 @@
 
 Sistema que auxilia no monitoramento dos servidores com uma fácil visualização do mailqueue e uso de disco, há também uma opção de liberar o IP caso utilize o csf nos servidores.
 
+<img src="screenshot/mailqueue.png" width="400">
+<img src="screenshot/verificar-ip.png" width="400">
+
 ## Instalação
 OBS: é necessário que todos os servidores estejam configurados com a chave no ssh.
 
