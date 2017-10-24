@@ -1,0 +1,4 @@
+% layout 'servidores';
+% title 'Bem vindo';
+<h2>Sistema de monitoramento</h2>
+Seja bem vindo ao sistema de gerenciamento de servidores

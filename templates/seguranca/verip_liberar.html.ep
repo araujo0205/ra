@@ -1,0 +1,12 @@
+% use Net::OpenSSH;
+
+% my $ssh = Net::OpenSSH->new($server);
+% if($type =~ /temporary/m) 
+  % {
+      % $ssh->capture({tty => 1},"csf -tr $ip");
+  % } else {
+      % $ssh->capture({tty => 1},"csf -dr $ip");
+  % }
+1
+
+

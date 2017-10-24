@@ -1,0 +1,72 @@
+% use Net::OpenSSH;
+% my $ssh = Net::OpenSSH->new($server);
+% my $bloq = 0;
+<div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="x_panel">
+    <div class="x_title">
+      <h2>Verificando IP:</h2>
+      <ul class="nav navbar-right panel_toolbox">
+	<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+	<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+% if($ip =~ /((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/) # Verifica se o dominio é um IP
+% {
+
+	% my $stdout = $ssh->capture({tty => 1},"csf -g $ip");
+	% my @lines_stdout = split(/\n/, $stdout);
+        % if($lines_stdout[-1] =~ /Block|csf.deny|CC_DENY/m) {
+                % $bloq = 1;
+   		%== "<h4>IP bloqueado:</h4> <br> $lines_stdout[$#lines_stdout]<br>"
+
+   		% if($lines_stdout[-1] =~ /Temporary/m) #caso seja temporario remove do temporario
+        % {
+           	        <form action="/liberarip/" method="post" name="liberarip" id="liberarip">
+    			<input type="hidden" name="ip" value="<%= $ip %>"> 
+    			<input type="hidden" name="server" value="<%= $server %>">
+    			<input type="hidden" name="type" value="temporary">
+			<div class="ln_solid"></div>
+        % } else {               
+          	        <form action="/liberarip/" method="post" name="liberarip" id="liberarip">
+    			<input type="hidden" name="ip" value="<%= $ip %>"> 
+    			<input type="hidden" name="server" value="<%= $server %>">
+    			<input type="hidden" name="type" value="permanent">
+		% }
+   	% } else { 
+   		%== "<h4>IP não bloqueado:</h4> <br> $lines_stdout[$#lines_stdout]<br>"
+   	% }
+% }
+% else {
+	%== "não é um IP válido = $ip";
+% }
+   % my $stdout = $ssh->capture({tty => 1},"cat /var/log/lfd.log | grep $ip");
+   % if($stdout ne ""){ #Not equal
+      <div class="ln_solid"></div>
+      <h4>Bloqueios anteriores:</h4>
+      %== $stdout =~ s/\r\n/<br>/gr
+      % if($stdout =~ "SMTP") {
+          <div class="ln_solid"></div>
+	  <h4>Contas que estão ocasionando o bloqueio no SMTP:</h4>
+	  % my $smtpout = $ssh->capture({tty => 1},"grep $ip /var/log/exim_mainlog | grep failed");
+          % $smtpout = $smtpout =~ s/\r\n/<br>/gr;
+	  %== $smtpout =~ s/[^ =]+\@[^ )]+/\<strong\>$&\<\/strong\>/gr
+      % }
+      % if($stdout =~ "IMAP") {
+          <div class="ln_solid"></div>
+	  <h4>Contas que estão ocasionando o bloqueio no IMAP:</h4>
+	  % my $smtpout = $ssh->capture({tty => 1},"grep $ip /var/log/maillog | grep failed");
+          % $smtpout = $smtpout =~ s/<|>//gr;
+          % $smtpout = $smtpout =~ s/\r\n/<br>/gr;
+	  %== $smtpout =~ s/[^ =]+\@[^ )]+/\<strong\>$&\<\/strong\>/gr
+      % }
+    % }
+    <div class="ln_solid"></div>
+    % if($bloq) {
+    <input type="button" class="btn btn-danger" onclick="LiberarIp(this);" value="Remover">
+    </form>
+    % }
+    </div>
+  </div>
+</div>

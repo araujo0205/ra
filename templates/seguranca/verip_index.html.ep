@@ -1,0 +1,69 @@
+% layout 'servidores';
+% title 'Segurança | Verificar IP';
+<div class="">
+  <div class="page-title">
+    <div class="title_left">
+      <h3 style="margin-bottom:20px">Verificar IP</h3>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+	<div class="x_title">
+	  <h2>Verificar IP</h2>
+	  <ul class="nav navbar-right panel_toolbox">
+	    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a> </li>
+	    <li><a class="info-link" onclick="$('#info-verip').toggle('slow');"><i class="fa fa-info"></i></a>
+	  </ul>
+	  <div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+	  <div id="info-verip" style="display:none">
+	    <p>
+	      Esta opção irá verificar se o IP está incluso no firewall do servidor selecionado. Basicamente é o mesmo que executar o comando abaixo no shell do servidor:
+	    </p>
+	    <blockquote style="font-size:12px">
+	      csf -g "ip"
+	    </blockquote>
+	    <div class="ln_solid"></div>
+	  </div>
+	  <form novalidate="" id="verip" data-parsley-validate="" class="form-horizontal form-label-left">
+
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ip">IP</label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <input id="ip" name="ip" required="required" class="form-control col-md-7 col-xs-12" type="text">
+              </div>
+            </div>
+	    <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12">Servidor</label>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <select class="select2_single form-control" id="servers" name="servers" tabindex="-1">
+                  <option></option>
+		  <option value=""></option>
+		  % while ( my ($server, $ip) = each(%$servers) ) {
+		  % #foreach my $server (@$servers) {
+                  <option value ="<%== $server %>"><%== $server . " - " . $ip %></option>
+		  % }
+		</select>
+              </div>
+            </div>
+            <div class="ln_solid"></div>
+            <div class="form-group">
+              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                <button type="button" class="btn btn-primary" onclick='reset();'>Limpar</button>
+                <button type="button" class="btn btn-success" onclick='VerIp();'>Enviar</button>
+              </div>
+            </div>
+
+          </form>
+	</div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+

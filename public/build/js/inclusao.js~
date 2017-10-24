@@ -1,0 +1,119 @@
+function VerIp(){
+    $("#verip :button").prop( "disabled", true );
+    $(function(){
+	new PNotify({                                  
+	    text: 'Iniciando busca',
+	    type: 'info',
+	    styling: 'bootstrap3'
+	});
+    });
+    $.post('/seguranca/verip/buscar/', $( "#verip" ).serialize(), function(data, status){
+       $(".row").append(data);
+       $("#verip :button").prop( "disabled", false );
+       reload();
+   });
+}
+function LiberarIp($this){
+    $form = $($this).closest('form');
+    $form.prop( "disabled", true );
+     $(function(){
+	new PNotify({                                  
+	    text: 'Iniciando a inclusão',
+	    type: 'info',
+	    styling: 'bootstrap3'
+	});
+     });
+    
+   $.post('/seguranca/verip/liberarip/', $form.serialize(), function(data, status){
+	if(data.localeCompare("1")) {
+	  $(function(){
+             new PNotify({
+		text: 'IP removido com sucesso!',
+		type: 'success',
+		styling: 'bootstrap3'
+             });
+	  });
+       }
+       else {
+	  $(function(){
+             new PNotify({
+                title: 'Oh Não!',
+                text: 'Houve um erro na tentativa de remover o IP.',
+                type: 'info',
+                styling: 'bootstrap3',
+                addclass: 'dark'
+             });
+	  });
+       }
+       $form.prop( "disabled", false );
+   });
+}
+
+function RejectListEnviar(){
+    $("#reject :button").prop( "disabled", true );
+    $(function(){
+	new PNotify({                                  
+	    text: 'Iniciando a inclusão',
+	    type: 'info',
+	    styling: 'bootstrap3'
+	});
+    });
+    $.post('/seguranca/rejectlist/incluir/', $( "#reject" ).serialize(), function(data, status){
+	if(data.localeCompare("1")) {
+	  $(function(){
+             new PNotify({
+		text: 'Ítens incluídos com sucesso!',
+		type: 'success',
+		styling: 'bootstrap3'
+             });
+	  });
+       }
+       else {
+	  $(function(){
+             new PNotify({
+                title: 'Oh Não!',
+                text: 'Houve um erro na tentativa de incluir.',
+                type: 'info',
+                styling: 'bootstrap3',
+                addclass: 'dark'
+             });
+	  });
+       }
+
+       $("#reject :button").prop( "disabled", false );
+    });
+}
+
+function reload() {
+   $('.collapse-link').off('click');
+   $('.collapse-link').on('click', function() {
+      var $BOX_PANEL = $(this).closest('.x_panel'),
+          $ICON = $(this).find('i'),
+          $BOX_CONTENT = $BOX_PANEL.find('.x_content');
+
+      // fix for some div with hardcoded fix class
+      if ($BOX_PANEL.attr('style')) {
+         $BOX_CONTENT.slideToggle(200, function(){
+            $BOX_PANEL.removeAttr('style');
+         });
+      } else {
+         $BOX_CONTENT.slideToggle(200);
+         $BOX_PANEL.css('height', 'auto');
+      }
+
+      $ICON.toggleClass('fa-chevron-up fa-chevron-down');
+   });
+
+   $('.close-link').off('click');
+   $('.close-link').click(function () {
+      var $BOX_PANEL = $(this).closest('.x_panel');
+
+      $BOX_PANEL.remove();
+   });
+
+   $('.close-link').on ('click', function () {
+      var $BOX_PANEL = $(this).closest('.x_panel');
+
+      $BOX_PANEL.remove();
+   });
+}

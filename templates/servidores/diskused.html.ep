@@ -1,0 +1,194 @@
+% layout 'servidores';
+% title 'Servidores | Mailqueue';
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>% de uso de disco no servidor</h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Servidores 1</h2>
+                   	  <ul class="nav navbar-right panel_toolbox">
+			    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a> </li>
+			    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="servidores_1_chart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+	      <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Servidores 2</h2>
+                   	  <ul class="nav navbar-right panel_toolbox">
+			    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a> </li>
+			    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="servidores_2_chart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+	      <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Servidores 3</h2>
+                   	  <ul class="nav navbar-right panel_toolbox">
+			    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a> </li>
+			    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="servidores_3_chart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+	      <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Servidores 4</h2>
+                   	  <ul class="nav navbar-right panel_toolbox">
+			    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a> </li>
+			    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="servidores_4_chart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+                </div>
+              </div>
+            </div>
+    <!-- mailqueue -->
+    <script>
+      Chart.defaults.global.legend = {
+      enabled: false
+      };
+
+      $(document).ready(function() {
+        	jQuery.getJSON("/json/diskused_servers_1.json", function(data) {
+      // Bar chart
+      var ctx = document.getElementById("servidores_1_chart");
+      var mybarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.servidores,
+          datasets: [{
+            label: '% uso',
+            backgroundColor: "#03586A",
+            data: data.valores
+          }]
+        },
+
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+		});
+
+jQuery.getJSON("/json/diskused_servers_2.json", function(data) {
+      // Bar chart
+      var ctx = document.getElementById("servidores_2_chart");
+      var mybarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.servidores,
+          datasets: [{
+            label: '% uso',
+            backgroundColor: "#e67300",
+            data: data.valores
+          }]
+        },
+
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+
+		});
+
+jQuery.getJSON("/json/diskused_servers_3.json", function(data) {
+      // Bar chart
+      var ctx = document.getElementById("servidores_3_chart");
+      var mybarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.servidores,
+          datasets: [{
+            label: '% uso',
+            backgroundColor: "#03586A",
+            data: data.valores
+          }]
+        },
+
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+
+		});
+
+jQuery.getJSON("/json/diskused_servers_4.json", function(data) {
+      // Bar chart
+      var ctx = document.getElementById("servidores_4_chart");
+      var mybarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.servidores,
+          datasets: [{
+            label: '% uso',
+            backgroundColor: "#03586A",
+            data: data.valores
+          }]
+        },
+
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+
+		});
+
+
+      });
+    </script>
+    <!-- /mailqueue -->

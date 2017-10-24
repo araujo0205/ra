@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html ng-app="SisApp">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><%= title %> </title>
+
+    <!-- Bootstrap -->
+    <link href="/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/libs/nprogress/nprogress.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/build/css/custom.min.css" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="/libs/select2/dist/css/select2.min.css" rel="stylesheet">
+    
+    <!-- PNotify -->
+    <link href="/libs/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/libs/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="/libs/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Chart.js -->
+    <script src="/libs/Chart.js/dist/Chart.min.js"></script>
+    
+  </head>
+
+  <body class="nav-md" ng-controller="MainCtrl as ctrl">
+    <div class="container body">
+      <div class="main_container">
+	<div class="col-md-3 left_col menu_fixed">
+	  <div class="left_col scroll-view">
+	    <div class="navbar nav_title" style="border: 0;">
+	      <a href="/" class="site_title"><i class="fa fa-eye"></i> <span>Ra_</span></a>
+	    </div>
+
+	    <div class="clearfix"></div>
+	    <!-- sidebar menu -->
+	    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+	      <div class="menu_section">
+	        <ul class="nav side-menu">
+	          <li><a><i class="fa fa-shield"></i> Segurança <span class="fa fa-chevron-down"></span></a>
+	            <ul class="nav child_menu">
+	              <li><a href="/seguranca/verip/">Verificar IP</a></li>
+	            </ul>
+	          </li>
+		  <li><a><i class="glyphicon glyphicon-hdd"></i> Servidores <span class="fa fa-chevron-down"></span></a>
+	            <ul class="nav child_menu">
+	              <li><a href="/servidores/mailqueue/">Mailqueue</a></li>
+		      <li><a href="/servidores/diskused/">Uso de disco</a></li>
+		      <li><a href="/servidores/listar/">Listar</a></li>
+	            </ul>
+	          </li>
+	        </ul>
+	      </div>
+	    </div>
+	    <!-- /sidebar menu -->
+
+	  </div>
+	</div>
+
+	<!-- top navigation -->
+	<div class="top_nav">
+	  <div class="nav_menu">
+	    <nav>
+	      <div class="nav toggle" style="padding-bottom: 12px;">
+	        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+	      </div>
+	    </nav>
+	  </div>
+	</div>
+	<!-- /top navigation -->
+
+	<!-- page content -->
+	<div class="right_col" role="main">
+	  <%== content %>
+	</div>
+	<!-- /page content -->
+
+	<!-- footer content -->
+	<footer>
+	  <div class="pull-right">
+	    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+	  </div>
+	  <div class="clearfix"></div>
+	</footer>
+	<!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- FastClick -->
+    <script src="/libs/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/libs/nprogress/nprogress.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="/build/js/custom.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="/libs/select2/dist/js/select2.full.min.js"></script>
+
+    <!-- PNotify -->
+    <script src="/libs/pnotify/dist/pnotify.js"></script>
+    <script src="/libs/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="/libs/pnotify/dist/pnotify.nonblock.js"></script>
+    
+    <!-- Minhas inclusões -->
+<script src="/build/js/ui-bootstrap-tpls-0.11.0.js"></script>
+<script src="/build/js/inclusao.js"> </script>
+<!-- /Minhas inclusões -->
+
+  <!-- Datatables -->
+    <script src="/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/libs/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!-- Select2 -->
+    <script>
+      $(document).ready(function() {
+        $(".select2_single").select2({
+          placeholder: "Escolha um servidor",
+          allowClear: true
+        });
+      });
+    </script>
+    <!-- /Select2 -->
+
+ 
+    <!-- Datatables -->
+    <script>
+        $(document).ready(function() {
+        var handleDataTableButtons = function() {
+          if ($("#datatable-buttons").length) {
+            $("#datatable-buttons").DataTable({
+              dom: "Bfrtip",
+              buttons: [
+                {
+                  extend: "copy",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "csv",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "excel",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "pdfHtml5",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "print",
+                  className: "btn-sm"
+                },
+              ],
+              responsive: true
+            });
+          }
+        };
+
+        TableManageButtons = function() {
+          "use strict";
+          return {
+            init: function() {
+              handleDataTableButtons();
+            }
+          };
+        }();
+
+
+	$('#datatable').DataTable();
+//	$('#datatable').DataTable( {
+//	        "processing": true,
+//	        "serverSide": true,
+//	        "ajax": "/json"
+//	} );
+
+        $('#datatable-keytable').DataTable({
+          keys: true
+        });
+
+        $('#datatable-responsive').DataTable();
+
+        $('#datatable-scroller').DataTable({
+          ajax: "js/datatables/json/scroller-demo.json",
+          deferRender: true,
+          scrollY: 380,
+          scrollCollapse: true,
+          scroller: true
+        });
+
+        $('#datatable-fixed-header').DataTable({
+          fixedHeader: true
+        });
+
+        var $datatable = $('#datatable-checkbox');
+
+        $datatable.dataTable({
+          'order': [[ 1, 'asc' ]],
+          'columnDefs': [
+            { orderable: false, targets: [0] }
+          ]
+        });
+        $datatable.on('draw.dt', function() {
+          $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-green'
+          });
+        });
+
+        TableManageButtons.init();
+	});
+
+    </script>
+    <!-- /Datatables -->
+
+  </body>
+</html>
